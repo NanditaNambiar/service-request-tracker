@@ -61,6 +61,7 @@ public void deleteUser(Long id) {
         dto.setEmail(user.getEmail());
         dto.setRoleName(user.getRole() != null ? user.getRole().getName() : null);
         dto.setDepartmentName(user.getDepartment() != null ? user.getDepartment().getName() : null);
+        dto.setCategoryName(user.getCategory() != null ? user.getCategory().getName() : null);
         return dto;
     }
 
@@ -78,9 +79,16 @@ public User updateUser(Long id, User user) {
         existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
-    existingUser.setDepartment(user.getDepartment());
-    existingUser.setRole(user.getRole());
-    existingUser.setCategory(user.getCategory());
+    // Only update department/role/category if they have IDs set (not null)
+    if (user.getDepartment() != null && user.getDepartment().getId() != null) {
+        existingUser.setDepartment(user.getDepartment());
+    }
+    if (user.getRole() != null && user.getRole().getId() != null) {
+        existingUser.setRole(user.getRole());
+    }
+    if (user.getCategory() != null && user.getCategory().getId() != null) {
+        existingUser.setCategory(user.getCategory());
+    }
 
     return userRepository.save(existingUser);
 }

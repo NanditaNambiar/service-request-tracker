@@ -61,6 +61,36 @@ public ResponseEntity<Map<String, Object>> getRequestsForUser(@PathVariable Stri
     return ResponseEntity.ok(response);
 }
 
+    // 📋 Get all requests (ADMIN only)
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('IT_STAFF')")
+    @Operation(summary = "Get all service requests")
+    @ApiResponse(
+            responseCode = "200",
+            description = "All service requests retrieved successfully",
+            content = @Content(mediaType = "application/json")
+    )
+    public ResponseEntity<Map<String, Object>> getAllRequests() {
+        try {
+            List<ServiceRequestDTO> dtos = requestService.getAllRequests().stream()
+                    .map(requestService::mapToDTO)
+                    .collect(Collectors.toList());
+            Map<String, Object> response = Map.of(
+                    "message", "All requests retrieved successfully",
+                    "data", dtos
+            );
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            System.err.println("Error in getAllRequests: " + e.getMessage());
+            e.printStackTrace();
+            Map<String, Object> errorResponse = Map.of(
+                    "message", "Error fetching requests: " + e.getMessage(),
+                    "data", new java.util.ArrayList<>()
+            );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
     // 📋 Get requests for IT staff (assigned to them)
     @GetMapping("/itstaff/{email}")
 @PreAuthorize("#email == principal.username or hasRole('ADMIN')")

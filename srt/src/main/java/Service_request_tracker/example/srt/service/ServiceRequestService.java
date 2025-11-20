@@ -21,5 +21,6 @@ public interface ServiceRequestService {
     ServiceRequestDTO mapToDTO(ServiceRequest request);
     public List<ServiceRequest> getRequestsForUserByEmail(String email);
     List<ServiceRequest> getRequestsForITStaffByEmail(String email);
+    List<ServiceRequest> getAllRequests();
 
 }

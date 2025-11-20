@@ -7,6 +7,7 @@ public class UserDTO {
     private String email;
     private String roleName;          // Role name only, not full Role object
     private String departmentName;    // Department name only, not full Department object
+    private String categoryName;      // Category name only, not full Category object
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -23,4 +24,7 @@ public class UserDTO {
 
     public String getDepartmentName() { return departmentName; }
     public void setDepartmentName(String departmentName) { this.departmentName = departmentName; }
+
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
 }

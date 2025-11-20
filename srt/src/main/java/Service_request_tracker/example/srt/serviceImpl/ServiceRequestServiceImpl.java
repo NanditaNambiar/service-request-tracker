@@ -105,6 +105,19 @@ public List<ServiceRequest> getRequestsForITStaffByEmail(String email) {
 }
 
     @Override
+    public List<ServiceRequest> getAllRequests() {
+        try {
+            List<ServiceRequest> requests = requestRepository.findAll();
+            System.out.println("Total requests fetched: " + requests.size());
+            return requests;
+        } catch (Exception e) {
+            System.err.println("Error fetching all requests: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
     public ServiceRequestDTO mapToDTO(ServiceRequest request) {
         ServiceRequestDTO dto = new ServiceRequestDTO();
         dto.setId(request.getId());

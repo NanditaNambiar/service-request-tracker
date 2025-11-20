@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
         // Generate JWT token based on email
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().getName());
 
-        return new LoginResponseDTO(token, user.getUsername(), user.getEmail(), user.getRole().getName());
+        return new LoginResponseDTO(user.getId(), token, user.getUsername(), user.getEmail(), user.getRole().getName());
 
     }
 }
